@@ -57,3 +57,10 @@ PoppyPopup.prompt(content, title, options, acceptCallback, cancelCallback);
 
 ### Configuration
 All colors and measures are SCSS variables so you can change them and recompile the file in order to replace previous values quickly.
+
+### Screenshots
+
+<img src="https://raw.githubusercontent.com/legomolina/Poppy-Popup/master/art/poppy.gif">
+<img src="https://raw.githubusercontent.com/legomolina/Poppy-Popup/master/art/poppy_1.png">
+<img src="https://raw.githubusercontent.com/legomolina/Poppy-Popup/master/art/poppy_2.png">
+<img src="https://raw.githubusercontent.com/legomolina/Poppy-Popup/master/art/poppy_3.png">
