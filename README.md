@@ -44,5 +44,16 @@ var options = {
 - **accept**: function that will be called when the user clicks the accept button. On alerts and confirms it gets a param that returns the popup id; in prompts it has the value of the input.
 - **cancel**: function that will be called when the user clicks the cancel button.
 
+Alert, confirm and prompt have an acceptCallback after options, so you can omit the accept param at `options`.
+
+And confirm and prompt have a cancelCallback after the accept one so you can omit the cancel param at `options`.
+
+These are all the params methods accept: _(just content is not optional)_
+```javascript
+PoppyPopup.alert(content, title, options, acceptCallback);
+PoppyPopup.confirm(content, title, options, acceptCallback, cancelCallback);
+PoppyPopup.prompt(content, title, options, acceptCallback, cancelCallback);
+```
+
 ### Configuration
 All colors and measures are SCSS variables so you can change them and recompile the file in order to replace previous values quickly.

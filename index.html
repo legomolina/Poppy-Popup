@@ -9,23 +9,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Roboto:400" rel="stylesheet">
 
     <script src="scripts/PoppyPopup.js"></script>
-
-    <script>
-        window.onload = function() {
-            PoppyPopup.prompt("Introduce tu nombre", "Control de usuario", {}, function(value) {
-                PoppyPopup.confirm("¿Quieres confirmar tu nombre, " + value + "?", "", {}, function() {
-                    PoppyPopup.alert("Hola " + value + "!", "Bienvenido/a");
-                }, function() {
-                    PoppyPopup.alert("Oh vaya...");
-                });
-            });
-        }
-    </script>
 </head>
 <body>
 
 <button onclick="PoppyPopup.alert('Hi, this is a PopUp!', 'With title!')">Alert Poppy</button>
-<button onclick="PoppyPopup.confirm('Hi, this is a PopUp!', 'With title!')">Confirm Poppy</button>
+<button onclick="PoppyPopup.confirm('Hi, this is a PopUp!', 'Confirm')">Confirm Poppy</button>
+<button onclick="PoppyPopup.prompt('Type your name', 'User control', {}, function(value) {
+    PoppyPopup.alert('Welcome' + value);
+})">Prompt Poppy</button>
 
 </body>
 </html>
