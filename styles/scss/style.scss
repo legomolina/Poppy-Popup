@@ -1,0 +1,213 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+
+  background-color: #eeeeee;
+}
+
+.poppy-popup {
+  $border_radius: 3px;
+
+  $header_height: 50px;
+  $bottom_height: 50px;
+
+  $popup_background: #FFFFFF;
+  $font_color: #222222;
+
+  $accept_button_font_color: #2088AD;
+  $cancel_button_font_color: #2088AD;
+  $accept_button_bg_color: rgba(0, 0, 0, .1);
+  $cancel_button_bg_color: rgba(0, 0, 0, .1);
+
+  $prompt_input_border_color: #CCCCCC;
+  $prompt_input_border_color_focus: #2088AD;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 16px;
+
+  opacity: 0;
+
+  transition: opacity .3s;
+
+  &.show {
+    opacity: 1;
+  }
+
+  & > .poppy-popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1010;
+
+    background-color: rgba(0, 0, 0, .5);
+
+    width: 100%;
+    height: 100%;
+  }
+
+  & > .poppy-popup-container {
+    max-width: 90%;
+    max-height: 90%;
+
+    width: 100%;
+
+    position: relative;
+    z-index: 1020;
+
+    border-radius: $border_radius;
+
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, .3);
+
+    & > .poppy-popup-header {
+      background-color: $popup_background;
+      color: $font_color;
+
+      height: 50px;
+      width: 100%;
+
+      position: relative;
+
+      border-top-left-radius: $border_radius;
+      border-top-right-radius: $border_radius;
+
+      & > .poppy-popup-title-text {
+        width: 100%;
+        max-height: $header_height;
+
+        font-size: 1.5em;
+        text-align: center;
+        line-height: $header_height;
+        text-overflow: ellipsis;
+        font-weight: bold;
+
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+
+    & > .poppy-popup-content {
+      background-color: $popup_background;
+
+      width: 100%;
+
+      padding: 10px 20px;
+
+      border-left: 1px solid #DDDDDD;
+      border-right: 1px solid #DDDDDD;
+
+      overflow: auto;
+
+      & > input[type="text"] {
+        background-color: transparent;
+
+        border-width: 0;
+        border-bottom: 2px solid $prompt_input_border_color;
+        outline: none;
+
+        font-size: 1.3em;
+
+        width: 100%;
+        margin-top: 20px;
+        padding: 5px;
+
+        box-shadow: none;
+
+        transition: border-bottom .2s;
+
+        &:focus {
+          border-bottom: 2px solid $prompt_input_border_color_focus;
+        }
+      }
+    }
+
+    & > .poppy-popup-buttons {
+      width: 100%;
+      height: $bottom_height;
+
+      padding: 0 10px;
+
+      background-color: $popup_background;
+
+      border-bottom-left-radius: $border_radius;
+      border-bottom-right-radius: $border_radius;
+
+      overflow: hidden;
+
+      & > .poppy-popup-accept, & > .poppy-popup-cancel {
+        width: 120px;
+
+        display: block;
+        float: right;
+
+        color: $accept_button_font_color;
+
+        & > a {
+          display: block;
+
+          color: inherit;
+          text-decoration: none;
+          text-align: center;
+
+          padding: 10px 0;
+
+          border-radius: $border_radius;
+
+          transition: background-color .2s, box-shadow .1s;
+
+          &:active {
+            box-shadow: inset 0 0 5px 1px rgba(0, 0, 0, .3);
+          }
+
+          & > i {
+            vertical-align: middle;
+            margin-top: -3px;
+          }
+        }
+
+      }
+
+      & > .poppy-popup-accept {
+        right: 0;
+        color: $accept_button_font_color;
+
+        & > a {
+          &:hover {
+            background-color: $accept_button_bg_color;
+          }
+        }
+      }
+
+      & > .poppy-popup-cancel {
+        left: 0;
+        color: $cancel_button_font_color;
+
+        & > a {
+          &:hover {
+            background-color: $cancel_button_bg_color;
+          }
+        }
+      }
+    }
+  }
+}

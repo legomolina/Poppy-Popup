@@ -1,0 +1,7 @@
+#Used for compile SCSS
+node_modules
+Gulpfile.js
+package.json
+
+#IDE files
+.idea
