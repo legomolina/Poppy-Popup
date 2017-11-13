@@ -1,13 +1,15 @@
-var PoppyPopup = function() {
+var PoppyPopup = function () {
     var popupType = null;
     var POPUP_ALERT = "ALERT";
     var POPUP_CFIRM = "CONFIRM";
     var POPUP_PROMT = "PROMT";
+    var KYBRD_ENTER = 13;
+    var KYBRD_ESC = 27;
 
     var popup = {
         customClassName: '',
 
-        alert: function(contentText, titleText, customOptions, acceptCallback) {
+        alert: function (contentText, titleText, customOptions, acceptCallback) {
             var options, popup;
 
             popupType = POPUP_ALERT;
@@ -18,15 +20,16 @@ var PoppyPopup = function() {
             popup = new Popup(titleText, contentText, options);
 
             document.querySelector('body').appendChild(popup);
+            popup.focus();
 
-            setTimeout(function() {
+            setTimeout(function () {
                 popup.classList.add('show');
             }, 1);
 
             return popup.id;
         },
 
-        confirm: function(contentText, titleText, customOptions, acceptCallback, cancelCallback) {
+        confirm: function (contentText, titleText, customOptions, acceptCallback, cancelCallback) {
             var options, popup;
 
             titleText = (titleText !== undefined) ? titleText : "";
@@ -37,15 +40,16 @@ var PoppyPopup = function() {
             popup = new Popup(titleText, contentText, options);
 
             document.querySelector('body').appendChild(popup);
+            popup.focus();
 
-            setTimeout(function() {
+            setTimeout(function () {
                 popup.classList.add('show');
             }, 1);
 
             return popup.id;
         },
 
-        prompt: function(contentText, titleText, customOptions, acceptCallback, cancelCallback) {
+        prompt: function (contentText, titleText, customOptions, acceptCallback, cancelCallback) {
             var options, popup;
 
             titleText = (titleText !== undefined) ? titleText : "";
@@ -56,35 +60,36 @@ var PoppyPopup = function() {
             popup = new Popup(titleText, contentText, options);
 
             document.querySelector('body').appendChild(popup);
+            popup.focus();
 
-            setTimeout(function() {
+            setTimeout(function () {
                 popup.classList.add('show');
             }, 1);
 
             return popup.id;
         },
 
-        accept: function(popupId, options) {
-            if(popupType === POPUP_ALERT) {
+        accept: function (popupId, options) {
+            if (popupType === POPUP_ALERT) {
                 close(popupId, options);
                 options.accept(popupId);
                 return true;
             }
 
-            if(popupType === POPUP_CFIRM) {
+            if (popupType === POPUP_CFIRM) {
                 close(popupId, options);
                 options.accept(popupId);
                 return true;
             }
 
-            if(popupType === POPUP_PROMT) {
+            if (popupType === POPUP_PROMT) {
                 options.accept(document.getElementById(popupId).querySelector('input').value);
                 close(popupId, options);
                 return true;
             }
         },
 
-        cancel: function(popupId, options) {
+        cancel: function (popupId, options) {
             close(popupId, options);
             options.cancel();
             return false;
@@ -95,8 +100,18 @@ var PoppyPopup = function() {
         var basePopup = document.createElement("DIV");
         basePopup.className = "poppy-popup";
         basePopup.id = btoa(new Date().getTime().toString());
+        basePopup.tabIndex = "-1";
 
-        if(options.showBackground) {
+        if (options.keyboardSupport) {
+            basePopup.onkeydown = function (e) {
+                if (e.keyCode === KYBRD_ENTER)
+                    PoppyPopup.accept(basePopup.id, options);
+                else if (e.keyCode === KYBRD_ESC)
+                    PoppyPopup.cancel(basePopup.id, options);
+            };
+        }
+
+        if (options.showBackground) {
             var background = document.createElement("DIV");
             background.className = "poppy-popup-background";
 
@@ -109,7 +124,7 @@ var PoppyPopup = function() {
         container.style.width = options.width;
         container.style.height = options.height;
 
-        if(titleText !== "") {
+        if (titleText !== "") {
             header = document.createElement("DIV");
             header.className = "poppy-popup-header";
 
@@ -125,7 +140,7 @@ var PoppyPopup = function() {
         content.className = "poppy-popup-content";
         content.innerHTML = contentText;
 
-        if(popupType === POPUP_PROMT) {
+        if (popupType === POPUP_PROMT) {
             promptInput = document.createElement("INPUT");
             promptInput.type = "text";
             promptInput.value = options.valueText;
@@ -142,13 +157,15 @@ var PoppyPopup = function() {
 
         acceptButton = document.createElement("A");
         acceptButton.href = "#";
-        acceptButton.onclick = function() {PoppyPopup.accept(basePopup.id, options);};
+        acceptButton.onclick = function () {
+            PoppyPopup.accept(basePopup.id, options);
+        };
         acceptButton.innerHTML = "<i class='material-icons'>done</i> OK";
 
         accept.appendChild(acceptButton);
         buttons.appendChild(accept);
 
-        if(popupType === POPUP_CFIRM || popupType === POPUP_PROMT) {
+        if (popupType === POPUP_CFIRM || popupType === POPUP_PROMT) {
             cancel = document.createElement("SPAN");
             cancel.className = "poppy-popup-cancel";
 
@@ -175,9 +192,9 @@ var PoppyPopup = function() {
         var popup = document.getElementById(popupId);
         popup.classList.remove('show');
 
-        popup.addEventListener('transitionend', function(e) {
-            if(e.propertyName === 'opacity') {
-                if(options.removeWhenClose)
+        popup.addEventListener('transitionend', function (e) {
+            if (e.propertyName === 'opacity') {
+                if (options.removeWhenClose)
                     popup.parentNode.removeChild(popup);
             }
         });
@@ -188,20 +205,25 @@ var PoppyPopup = function() {
             showBackground: true,
             removeWhenClose: true,
             width: 400 + "px",
+            keyboardSupport: true,
             valueText: "",
             placeholderText: "",
-            accept: function() {return true;},
-            cancel: function() {return false;}
+            accept: function () {
+                return true;
+            },
+            cancel: function () {
+                return false;
+            }
         };
 
-        if(typeof acceptCallback === 'function' && acceptCallback !== undefined)
+        if (typeof acceptCallback === 'function' && acceptCallback !== undefined)
             options.accept = acceptCallback;
 
-        if(typeof cancelCallback === 'function' && cancelCallback !== undefined)
+        if (typeof cancelCallback === 'function' && cancelCallback !== undefined)
             options.cancel = cancelCallback;
 
-        if(customOptions !== undefined) {
-            for(var option in options) {
+        if (customOptions !== undefined) {
+            for (var option in options) {
                 if (customOptions.hasOwnProperty(option)) {
                     options[option] = customOptions[option];
                 }
