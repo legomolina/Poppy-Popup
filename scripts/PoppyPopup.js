@@ -91,7 +91,7 @@ var PoppyPopup = function() {
         }
     };
 
-    function Popup(titleText, contentText, options, valueText, placeholderText) {
+    function Popup(titleText, contentText, options) {
         var basePopup = document.createElement("DIV");
         basePopup.className = "poppy-popup";
         basePopup.id = btoa(new Date().getTime().toString());
