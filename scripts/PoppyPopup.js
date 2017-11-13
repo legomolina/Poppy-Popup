@@ -91,7 +91,7 @@ var PoppyPopup = function() {
         }
     };
 
-    function Popup(titleText, contentText, options) {
+    function Popup(titleText, contentText, options, valueText, placeholderText) {
         var basePopup = document.createElement("DIV");
         basePopup.className = "poppy-popup";
         basePopup.id = btoa(new Date().getTime().toString());
@@ -128,6 +128,8 @@ var PoppyPopup = function() {
         if(popupType === POPUP_PROMT) {
             promptInput = document.createElement("INPUT");
             promptInput.type = "text";
+            promptInput.value = options.valueText;
+            promptInput.placeholder = options.placeholderText;
 
             content.appendChild(promptInput);
         }
@@ -186,6 +188,8 @@ var PoppyPopup = function() {
             showBackground: true,
             removeWhenClose: true,
             width: 400 + "px",
+            valueText: "",
+            placeholderText: "",
             accept: function() {return true;},
             cancel: function() {return false;}
         };

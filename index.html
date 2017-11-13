@@ -14,7 +14,7 @@
 
 <button onclick="PoppyPopup.alert('Hi, this is a PopUp!', 'With title!')">Alert Poppy</button>
 <button onclick="PoppyPopup.confirm('Hi, this is a PopUp!', 'Confirm')">Confirm Poppy</button>
-<button onclick="PoppyPopup.prompt('Type your name', 'User control', {}, function(value) {
+<button onclick="PoppyPopup.prompt('Type your name', 'User control', {placeholderText: 'Name', valueText: 'Insert your name'}, function(value) {
     PoppyPopup.alert('Welcome ' + value);
 })">Prompt Poppy</button>
 
