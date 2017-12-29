@@ -1,4 +1,4 @@
-var PoppyPopup = function () {
+define(function () {
     var popupType = null;
     var POPUP_ALERT = "ALERT";
     var POPUP_CFIRM = "CONFIRM";
@@ -295,4 +295,4 @@ var PoppyPopup = function () {
     }
 
     return popup;
-}();
+});

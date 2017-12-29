@@ -5,3 +5,6 @@ package.json
 
 #IDE files
 .idea
+
+#testing AMD
+scripts/require.js

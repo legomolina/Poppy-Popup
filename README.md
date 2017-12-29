@@ -1,5 +1,10 @@
 # PoppyPopup
-Custom popups to replace vanilla JavaScript prompts
+Custom popups to replace vanilla JavaScript prompts.
+
+### ChangeLog
+- Added comments to all code
+- Added support for require.js and AMD
+- Added main.js file to test modules
 
 ### Installation
 1. Copy 'style.css' located inside 'styles/css' into your project and link it with ```<link>```.
