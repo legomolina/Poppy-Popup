@@ -20,7 +20,7 @@ var PoppyPopup = function () {
      */
 
     var popup = {
-        customClassName: '',
+        customClassName: "",
 
         /**
          * alert: Creates an alert popup
@@ -40,11 +40,11 @@ var PoppyPopup = function () {
 
             popup = new Popup(titleText, contentText, options);
 
-            document.querySelector('body').appendChild(popup);
+            document.querySelector("body").appendChild(popup);
             popup.focus();
 
             setTimeout(function () {
-                popup.classList.add('show');
+                popup.classList.add("show");
             }, 1);
 
             return popup.id;
@@ -69,11 +69,11 @@ var PoppyPopup = function () {
 
             popup = new Popup(titleText, contentText, options);
 
-            document.querySelector('body').appendChild(popup);
+            document.querySelector("body").appendChild(popup);
             popup.focus();
 
             setTimeout(function () {
-                popup.classList.add('show');
+                popup.classList.add("show");
             }, 1);
 
             return popup.id;
@@ -98,11 +98,11 @@ var PoppyPopup = function () {
 
             popup = new Popup(titleText, contentText, options);
 
-            document.querySelector('body').appendChild(popup);
+            document.querySelector("body").appendChild(popup);
             popup.focus();
 
             setTimeout(function () {
-                popup.classList.add('show');
+                popup.classList.add("show");
             }, 1);
 
             return popup.id;
@@ -128,7 +128,7 @@ var PoppyPopup = function () {
             }
 
             if (popupType === POPUP_PROMT) {
-                options.accept(document.getElementById(popupId).querySelector('input').value);
+                options.accept(document.getElementById(popupId).querySelector("input").value);
                 close(popupId, options);
                 return true;
             }
@@ -158,7 +158,7 @@ var PoppyPopup = function () {
      * @constructor
      */
     function Popup(titleText, contentText, options) {
-        var basePopup = document.createElement("DIV");
+        var basePopup = document.createElement("div");
         basePopup.className = "poppy-popup";
         basePopup.id = btoa(new Date().getTime().toString());
         basePopup.tabIndex = -1;
@@ -173,23 +173,22 @@ var PoppyPopup = function () {
         }
 
         if (options.showBackground) {
-            var background = document.createElement("DIV");
+            var background = document.createElement("div");
             background.className = "poppy-popup-background";
 
             basePopup.appendChild(background);
         }
 
         var container, header, headerTitle, content, promptInput, buttons, accept, acceptButton, cancel, cancelButton;
-        container = document.createElement("DIV");
+        container = document.createElement("div");
         container.className = "poppy-popup-container";
         container.style.width = options.width;
-        container.style.height = options.height;
 
         if (titleText !== "") {
-            header = document.createElement("DIV");
+            header = document.createElement("div");
             header.className = "poppy-popup-header";
 
-            headerTitle = document.createElement("DIV");
+            headerTitle = document.createElement("div");
             headerTitle.className = "poppy-popup-title-text";
             headerTitle.innerHTML = titleText;
 
@@ -197,12 +196,12 @@ var PoppyPopup = function () {
             container.appendChild(header);
         }
 
-        content = document.createElement("DIV");
+        content = document.createElement("div");
         content.className = "poppy-popup-content";
         content.innerHTML = contentText;
 
         if (popupType === POPUP_PROMT) {
-            promptInput = document.createElement("INPUT");
+            promptInput = document.createElement("input");
             promptInput.type = "text";
             promptInput.value = options.valueText;
             promptInput.placeholder = options.placeholderText;
@@ -210,13 +209,13 @@ var PoppyPopup = function () {
             content.appendChild(promptInput);
         }
 
-        buttons = document.createElement("DIV");
+        buttons = document.createElement("div");
         buttons.className = "poppy-popup-buttons";
 
-        accept = document.createElement("SPAN");
+        accept = document.createElement("span");
         accept.className = "poppy-popup-accept";
 
-        acceptButton = document.createElement("A");
+        acceptButton = document.createElement("a");
         acceptButton.href = "#";
         acceptButton.onclick = function () {
             popup.accept(basePopup.id, options);
@@ -227,10 +226,10 @@ var PoppyPopup = function () {
         buttons.appendChild(accept);
 
         if (popupType === POPUP_CFIRM || popupType === POPUP_PROMT) {
-            cancel = document.createElement("SPAN");
+            cancel = document.createElement("span");
             cancel.className = "poppy-popup-cancel";
 
-            cancelButton = document.createElement("A");
+            cancelButton = document.createElement("a");
             cancelButton.href = "#";
             cancelButton.onclick = function () {
                 popup.cancel(basePopup.id, options);
@@ -251,10 +250,10 @@ var PoppyPopup = function () {
 
     function close(popupId, options) {
         var popup = document.getElementById(popupId);
-        popup.classList.remove('show');
+        popup.classList.remove("show");
 
-        popup.addEventListener('transitionend', function (e) {
-            if (e.propertyName === 'opacity') {
+        popup.addEventListener("transitionend", function (e) {
+            if (e.propertyName === "opacity") {
                 if (options.removeWhenClose)
                     popup.parentNode.removeChild(popup);
             }
@@ -277,10 +276,10 @@ var PoppyPopup = function () {
             }
         };
 
-        if (typeof acceptCallback === 'function' && acceptCallback !== undefined)
+        if (typeof acceptCallback === "function" && acceptCallback !== undefined)
             options.accept = acceptCallback;
 
-        if (typeof cancelCallback === 'function' && cancelCallback !== undefined)
+        if (typeof cancelCallback === "function" && cancelCallback !== undefined)
             options.cancel = cancelCallback;
 
         if (customOptions !== undefined) {
