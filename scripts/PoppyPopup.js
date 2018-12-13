@@ -13,6 +13,7 @@ var PoppyPopup = function () {
      * @property {boolean} [removeWhenClose] When it's set to true, the popup will be removed from the DOM when its closed, otherwise, the popup just disappears but it stays on the DOM
      * @property {string} [width] The width of the popup, a string with compatible units like em, px, %; i.e. "150px" or "50%"
      * @property {boolean} [keyboardSupport] Sets if Enter and Esc keys should work. Enter to accept and Esc to cancel
+     * @property {boolean} [cancelButton] Sets if cancel button should be present on prompt and confirm popups
      * @property {string} [valueText] The value the input will contain (just prompt)
      * @property {string} [placeholderText] The placeholder the input will contain (just prompt)
      * @property {function} [accept] Function that will be called when the user clicks the accept button. On alerts and confirms it gets a param that returns the popup id; in prompts it has the value of the input
@@ -164,12 +165,15 @@ var PoppyPopup = function () {
         basePopup.tabIndex = -1;
 
         if (options.keyboardSupport) {
-            basePopup.onkeydown = function (e) {
-                if (e.keyCode === KYBRD_ENTER)
+            basePopup.addEventListener("keydown", function (e) {
+                if (e.keyCode === KYBRD_ENTER) {
                     popup.accept(basePopup.id, options);
-                else if (e.keyCode === KYBRD_ESC)
+                }
+                // if cancel button is not present, prevent cancelling action with keyboard                
+                else if (e.keyCode === KYBRD_ESC && options.cancelButton) {
                     popup.cancel(basePopup.id, options);
-            };
+                }
+            }, false);
         }
 
         if (options.showBackground) {
@@ -217,23 +221,26 @@ var PoppyPopup = function () {
 
         acceptButton = document.createElement("a");
         acceptButton.href = "#";
-        acceptButton.onclick = function () {
+        acceptButton.addEventListener("click", function (ev) {
+            ev.preventDefault();
             popup.accept(basePopup.id, options);
-        };
+        }, false);
         acceptButton.innerHTML = "<i class='material-icons'>done</i> OK";
 
         accept.appendChild(acceptButton);
         buttons.appendChild(accept);
 
-        if (popupType === POPUP_CFIRM || popupType === POPUP_PROMT) {
+        // if cancel button is false prevent adding it to the popup
+        if (cancelButton && (popupType === POPUP_CFIRM || popupType === POPUP_PROMT)) {
             cancel = document.createElement("span");
             cancel.className = "poppy-popup-cancel";
 
             cancelButton = document.createElement("a");
             cancelButton.href = "#";
-            cancelButton.onclick = function () {
+            cancelButton.addEventListener("click", function (ev) {
+                ev.preventDefault();
                 popup.cancel(basePopup.id, options);
-            };
+            }, false);
             cancelButton.innerHTML = "<i class='material-icons'>close</i> Cancel";
 
             cancel.appendChild(cancelButton);
@@ -266,6 +273,7 @@ var PoppyPopup = function () {
             removeWhenClose: true,
             width: 400 + "px",
             keyboardSupport: true,
+            cancelButton: true,
             valueText: "",
             placeholderText: "",
             accept: function () {

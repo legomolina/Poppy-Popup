@@ -39,6 +39,7 @@ var options = {
     removeWhenClose: true,
     width: 400 + "px",
     keyboardSupport: true,
+    cancelButton: true,
     valueText: "",
     placeholderText: "",
     accept: function() {return true;},
@@ -50,6 +51,7 @@ var options = {
 - **removeWhenClose**: when it's set to true, the popup will be removed from the DOM when its closed, otherwise, the popup just disappears but it stays on the DOM.
 - **width**: the width of the popup, a string with compatible units like _em_, _px_, _%_; i.e. "150px" or "50%".
 - **keyboardSupport**: sets if Enter and Esc keys should work. Enter to accept and Esc to cancel.
+- **cancelButton**: sets if cancel button should be present on prompt and confirm popups
 - **valueText**: the value the input will contain (just prompt).
 - **placeholderText**: the placeholder the input will contain (just prompt).
 - **accept**: function that will be called when the user clicks the accept button. On alerts and confirms it gets a param that returns the popup id; in prompts it has the value of the input.
