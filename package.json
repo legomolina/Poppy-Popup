@@ -1,0 +1,22 @@
+{
+  "name": "poppy-popup",
+  "version": "1.0.1",
+  "description": "Custom popups to replace vanilla JavaScript prompts",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/legomolina/poppy-popup.git"
+  },
+  "keywords": [
+    "popup",
+    "prompt",
+    "alert",
+    "dialogs"
+  ],
+  "author": "legomolina",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/legomolina/poppy-popup/issues"
+  },
+  "homepage": "https://github.com/legomolina/poppy-popup#readme"
+}
