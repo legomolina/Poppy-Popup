@@ -7,9 +7,10 @@ Custom popups to replace vanilla JavaScript prompts.
 - Added main.js file to test modules
 
 ### Installation
-1. Copy 'style.css' located inside 'styles/css' into your project and link it with ```<link>```.
-2. Copy the JavaScript file 'PoppyPopup.js' into your project and include it in your header with ```<script>```.
-3. Enjoy using new Prompts!
+1. Run ```npm install poppy-popup```
+2. Copy style in your project. You can choose between .css or .scss file.
+3. Require it in your project: ```const PoppyPopup = require('poppy-popup')'```
+4. Enjoy using new Prompts!
 
 ### Usage
 To display an alert popup:
@@ -32,9 +33,9 @@ All methods accept the popup content (you can use HTML also), next the title of 
 PoppyPopup.alert("Popop content", "Title", options);
 ```
 
-`options` has this default params:
+Default `options` params:
 ```javascript
-var options = {
+const options = {
     showBackground: true,
     removeWhenClose: true,
     width: 400 + "px",
@@ -42,8 +43,8 @@ var options = {
     cancelButton: true,
     valueText: "",
     placeholderText: "",
-    accept: function() {return true;},
-    cancel: function() {return false;}
+    accept: function() { return true; },
+    cancel: function() { return false; }
 }
 ```
 

@@ -1,19 +1,4 @@
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-
-  background-color: #eeeeee;
-}
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 .poppy-popup {
   $border_radius: 3px;
@@ -31,6 +16,8 @@ html, body {
 
   $prompt_input_border_color: #CCCCCC;
   $prompt_input_border_color_focus: #2088AD;
+
+  box-sizing: border-box;
 
   position: fixed;
   top: 0;

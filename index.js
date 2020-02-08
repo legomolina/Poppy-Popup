@@ -1,10 +1,10 @@
-define(function () {
-    var popupType = null;
-    var POPUP_ALERT = "ALERT";
-    var POPUP_CFIRM = "CONFIRM";
-    var POPUP_PROMT = "PROMT";
-    var KYBRD_ENTER = 13;
-    var KYBRD_ESC = 27;
+function PoppyPopup () {
+    let popupType = null;
+    const POPUP_ALERT = "ALERT";
+    const POPUP_CFIRM = "CONFIRM";
+    const POPUP_PROMT = "PROMT";
+    const KYBRD_ENTER = "Enter";
+    const KYBRD_ESC = "Escape";
 
     /**
      * Options array for creating the popup
@@ -20,7 +20,7 @@ define(function () {
      * @property {function} [cancel] Function that will be called when the user clicks the cancel button
      */
 
-    var popup = {
+    const popup = {
         customClassName: "",
 
         /**
@@ -28,11 +28,11 @@ define(function () {
          * @param {string} contentText The text to be displayed in the popup
          * @param {string} [titleText] The text to be displayed in the popup header
          * @param {Options} [customOptions] Options to configure the popup
-         * @param {Function} [acceptCallback] Funciton to call when popup is accepted
+         * @param {Function} [acceptCallback] Function to call when popup is accepted
          * @returns {string} The id of the created popup
          */
         alert: function (contentText, titleText, customOptions, acceptCallback) {
-            var options, popup;
+            let options, popup;
 
             popupType = POPUP_ALERT;
 
@@ -44,7 +44,7 @@ define(function () {
             document.querySelector("body").appendChild(popup);
             popup.focus();
 
-            setTimeout(function () {
+            setTimeout(() => {
                 popup.classList.add("show");
             }, 1);
 
@@ -56,12 +56,12 @@ define(function () {
          * @param {string} contentText The text to be displayed in the popup
          * @param {string} [titleText] The text to be displayed in the popup header
          * @param {Options} [customOptions] Options to configure the popup
-         * @param {Function} [acceptCallback] Funciton to call when popup is accepted
-         * @param {Function} [cancelCallback] Funciton to call when popup is cancel
+         * @param {Function} [acceptCallback] Function to call when popup is accepted
+         * @param {Function} [cancelCallback] Function to call when popup is cancel
          * @returns {string} The id of the created popup
          */
         confirm: function (contentText, titleText, customOptions, acceptCallback, cancelCallback) {
-            var options, popup;
+            let options, popup;
 
             titleText = (titleText !== undefined) ? titleText : "";
             options = mergeOptions(customOptions, acceptCallback, cancelCallback);
@@ -85,12 +85,12 @@ define(function () {
          * @param {string} contentText The text to be displayed in the popup
          * @param {string} [titleText] The text to be displayed in the popup header
          * @param {Options} [customOptions] Options to configure the popup
-         * @param {Function} [acceptCallback] Funciton to call when popup is accepted
-         * @param {Function} [cancelCallback] Funciton to call when popup is cancel
+         * @param {Function} [acceptCallback] Function to call when popup is accepted
+         * @param {Function} [cancelCallback] Function to call when popup is cancel
          * @returns {string} The id of the created popup
          */
         prompt: function (contentText, titleText, customOptions, acceptCallback, cancelCallback) {
-            var options, popup;
+            let options, popup;
 
             titleText = (titleText !== undefined) ? titleText : "";
             options = mergeOptions(customOptions, acceptCallback, cancelCallback);
@@ -159,31 +159,31 @@ define(function () {
      * @constructor
      */
     function Popup(titleText, contentText, options) {
-        var basePopup = document.createElement("div");
+        const basePopup = document.createElement("div");
         basePopup.className = "poppy-popup";
         basePopup.id = btoa(new Date().getTime().toString());
         basePopup.tabIndex = -1;
 
         if (options.keyboardSupport) {
-            basePopup.addEventListener("keydown", function (e) {
-                if (e.keyCode === KYBRD_ENTER) {
+            basePopup.addEventListener("keydown", (e) => {
+                if (e.code === KYBRD_ENTER) {
                     popup.accept(basePopup.id, options);
                 }
-                // if cancel button is not present, prevent cancelling action with keyboard                
-                else if (e.keyCode === KYBRD_ESC && options.cancelButton) {
+                // if cancel button is not present, prevent cancelling action with keyboard
+                else if (e.code === KYBRD_ESC && options.cancelButton) {
                     popup.cancel(basePopup.id, options);
                 }
             }, false);
         }
 
         if (options.showBackground) {
-            var background = document.createElement("div");
+            const background = document.createElement("div");
             background.className = "poppy-popup-background";
 
             basePopup.appendChild(background);
         }
 
-        var container, header, headerTitle, content, promptInput, buttons, accept, acceptButton, cancel, cancelButton;
+        let container, header, headerTitle, content, promptInput, buttons, accept, acceptButton, cancel, cancelButton;
         container = document.createElement("div");
         container.className = "poppy-popup-container";
         container.style.width = options.width;
@@ -256,10 +256,10 @@ define(function () {
     }
 
     function close(popupId, options) {
-        var popup = document.getElementById(popupId);
+        const popup = document.getElementById(popupId);
         popup.classList.remove("show");
 
-        popup.addEventListener("transitionend", function (e) {
+        popup.addEventListener("transitionend", (e) => {
             if (e.propertyName === "opacity") {
                 if (options.removeWhenClose)
                     popup.parentNode.removeChild(popup);
@@ -268,7 +268,7 @@ define(function () {
     }
 
     function mergeOptions(customOptions, acceptCallback, cancelCallback) {
-        var options = {
+        const options = {
             showBackground: true,
             removeWhenClose: true,
             width: 400 + "px",
@@ -284,14 +284,14 @@ define(function () {
             }
         };
 
-        if (typeof acceptCallback === "function" && acceptCallback !== undefined)
+        if (acceptCallback && typeof acceptCallback === "function")
             options.accept = acceptCallback;
 
-        if (typeof cancelCallback === "function" && cancelCallback !== undefined)
+        if (cancelCallback && typeof cancelCallback === "function")
             options.cancel = cancelCallback;
 
-        if (customOptions !== undefined) {
-            for (var option in options) {
+        if (customOptions) {
+            for (const option in options) {
                 if (customOptions.hasOwnProperty(option)) {
                     options[option] = customOptions[option];
                 }
@@ -302,4 +302,6 @@ define(function () {
     }
 
     return popup;
-});
+}
+
+export default PoppyPopup();
