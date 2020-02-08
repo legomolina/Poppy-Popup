@@ -231,7 +231,7 @@ function PoppyPopup () {
         buttons.appendChild(accept);
 
         // if cancel button is false prevent adding it to the popup
-        if (cancelButton && (popupType === POPUP_CFIRM || popupType === POPUP_PROMT)) {
+        if (options.cancelButton && (popupType === POPUP_CFIRM || popupType === POPUP_PROMT)) {
             cancel = document.createElement("span");
             cancel.className = "poppy-popup-cancel";
 
